@@ -44,8 +44,10 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="7zow8hrRUq19Zfaq4NABiGYw" />
 
+        <!-- configChanges 不让activity在锁屏时发生生命周期变化 -->
         <activity
             android:name=".activity.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,10 +59,13 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote">
+            android:process=":remote" >
         </service>
 
-
+        <activity
+            android:name=".activity.OfflineMap"
+            android:label="@string/title_activity_offline_map" >
+        </activity>
     </application>
 
 </manifest>

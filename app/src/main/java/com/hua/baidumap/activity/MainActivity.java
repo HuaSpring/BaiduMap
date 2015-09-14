@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.utils.DistanceUtil;
+
 import com.hua.baidumap.R;
 
 import java.text.DecimalFormat;
@@ -105,7 +108,7 @@ public class MainActivity extends Activity {
         mBaiduMap.setMyLocationEnabled(true);
 
 
-        // 定位初始化,,要不要放到服务里面？？？？？？？？？
+        // 定位初始化,,要不要放到服务里面？？ 不用了，因为它在Manifest中已经配置了一个服务，地理位置的开启SDK已经放在了服务里面
 
         mLocClient = new LocationClient(this);
        //mLocClient = ((DemoApplication)getApplication()).mLocationClient;
@@ -133,7 +136,35 @@ public class MainActivity extends Activity {
     }
 
 
+    /**
+     * 加载选项菜单下载离线地图
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_settings:
+
+                startActivity(new Intent(MainActivity.this, OfflineMap.class));
+                break;
+            default:
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void downLoadOfflineMap(View v){
+        startActivity(new Intent(MainActivity.this, OfflineMap.class));
+    }
 
 
     /**
@@ -169,7 +200,7 @@ public class MainActivity extends Activity {
                     List<LatLng> points = new ArrayList<>();
                     points.add(pt2);
                     points.add(pt2);
-                    OverlayOptions ooPolyline = new PolylineOptions().width(10)
+                    OverlayOptions ooPolyline = new PolylineOptions().width(8)
                             .color(0Xaa1bff2c)
                             .points(points)
                             ;
@@ -183,8 +214,8 @@ public class MainActivity extends Activity {
                     List<LatLng> points = new ArrayList<>();
                     points.add(pt1);
                     points.add(pt2);
-                    OverlayOptions ooPolyline = new PolylineOptions().width(10)
-                            .color(0Xaa1bff2c)
+                    OverlayOptions ooPolyline = new PolylineOptions().width(8)
+                            .color(0Xaa5fff48)
                             .points(points);
                     mBaiduMap.addOverlay(ooPolyline);
                     // 计算距离
@@ -243,11 +274,12 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+
+         super.onDestroy();
         // 注销广播
         unregisterReceiver(mReceiver);
         // 退出时销毁定位
-        mLocClient.stop();
+         mLocClient.stop();
         // 关闭定位图层
         mBaiduMap.setMyLocationEnabled(false);
         mMapView.onDestroy();

@@ -14,12 +14,10 @@
 
 
     <Button
-        android:background="#aa1bff2c"
+        android:background="#aa5fff48"
         android:layout_alignParentRight="true"
         android:text="普通"
         android:id="@+id/btn_requestLoc"
-        android:layout_marginBottom="20dp"
-        android:src="@mipmap/icon_here"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -30,4 +28,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:visibility="gone"
+        android:layout_marginRight="10dp"
+        android:background="#aa1bff2c"
+        android:layout_toLeftOf="@id/btn_requestLoc"
+        android:onClick="downLoadOfflineMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="下载地图"/>
 </RelativeLayout>
